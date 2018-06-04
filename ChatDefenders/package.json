@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "gulp-rename": "^1.2.3",
-    "pump": "^3.0.0",
     "requirejs": "^2.3.5"
   }
 }
