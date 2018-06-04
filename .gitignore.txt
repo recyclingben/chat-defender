@@ -1,2 +1,2 @@
-ChatDefenders/node_modules
-node_modules
+ChatDefenders/node_modules/
+node_modules/
