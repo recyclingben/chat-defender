@@ -1,4 +1,4 @@
-﻿define('player', function () {
+define('player', function () {
     return {
         name: "bill"
     };
