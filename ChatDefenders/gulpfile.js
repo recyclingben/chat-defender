@@ -1,5 +1,4 @@
-﻿/// <binding BeforeBuild='copy-modules' ProjectOpened='copy-modules' />
-const gulp = require("gulp"),
+﻿const gulp = require("gulp"),
       uglify = require("gulp-uglify-es").default,
       rename = require("gulp-rename"),
       pump = require("pump");
