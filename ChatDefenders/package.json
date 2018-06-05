@@ -4,10 +4,10 @@
   "private": true,
   "devDependencies": {
     "gulp": "^3.9.1",
-    "gulp-uglify-es": "^1.0.4"
+    "gulp-uglify-es": "^1.0.4",
+    "gulp-rename": "^1.2.3"
   },
   "dependencies": {
-    "gulp-rename": "^1.2.3",
     "requirejs": "^2.3.5"
   }
 }
