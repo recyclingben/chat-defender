@@ -4,8 +4,9 @@
   "private": true,
   "devDependencies": {
     "gulp": "^3.9.1",
+    "gulp-rename": "^1.2.3",
     "gulp-uglify-es": "^1.0.4",
-    "gulp-rename": "^1.2.3"
+    "gulp-uglifycss": "^1.0.9"
   },
   "dependencies": {
     "requirejs": "^2.3.5"
