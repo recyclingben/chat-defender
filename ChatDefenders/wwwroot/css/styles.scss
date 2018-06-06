@@ -1,6 +1,4 @@
-﻿$dark-outline: white;
-
-nav {
+﻿nav {
     z-index: 5 !important;
 
     button {
@@ -12,6 +10,7 @@ nav {
     }
     .navbar-brand {
         font-weight: bold;
+        color: black;
     }
 }
 

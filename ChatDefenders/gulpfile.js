@@ -2,7 +2,8 @@
 const gulp = require("gulp"),
         uglifyJs = require("gulp-uglify-es").default,
         uglifyCss = require("gulp-uglifycss"),
-        rename = require("gulp-rename");
+        rename = require("gulp-rename"),
+        sass = require("gulp-sass");
 
 gulp.task('copy-modules', function () {
     return gulp.src('node_modules/requirejs/require.js')
@@ -16,6 +17,13 @@ gulp.task('minifyJs', function () {
         .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest('wwwroot/js'));
 });
+
+gulp.task('compileScss', function () {
+    return gulp.src('wwwroot/css/*.scss')
+        .pipe(sass())
+        .pipe(gulp.dest('wwwroot/css'));
+});
+
 gulp.task('minifyCss', function () {
     // minify all js files and add '.min' suffix
     return gulp.src(['wwwroot/css/*.css', '!wwwroot/css/*.min.css'])
@@ -27,5 +35,7 @@ gulp.task('minifyCss', function () {
 // watch all needed tasks
 gulp.task('watch', function () {
     gulp.watch('wwwroot/js/*.js', ['minifyJs']);
+
+    gulp.watch('wwwroot/css/*.scss', ['compileScss'])
     gulp.watch('wwwroot/css/*.css', ['minifyCss']);
 });
