@@ -1,30 +1,33 @@
 ﻿/// <binding ProjectOpened='watch' />
-const gulp = require("gulp"),
+const   gulp = require("gulp"),
         uglifyJs = require("gulp-uglify-es").default,
         uglifyCss = require("gulp-uglifycss"),
         rename = require("gulp-rename"),
         sass = require("gulp-sass");
 
-gulp.task('copy-modules', function () {
+// Copies only needed files from the node_modules folder.
+// This  should  be updated  when new modules are  added.
+gulp.task('copy:modules', function () {
     return gulp.src('node_modules/requirejs/require.js')
         .pipe(gulp.dest('wwwroot/js'));
 });
 
-gulp.task('minifyJs', function () {
-    // takes all .js files that weren't already minified
+// Minifies all .js files, excluding all that have already
+// been minified to avoid an endless loop.
+gulp.task('minify:js', function () {
     return gulp.src(['wwwroot/js/*.js', '!wwwroot/js/*.min.js'])
         .pipe(uglifyJs())
         .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest('wwwroot/js'));
 });
 
-gulp.task('compileScss', function () {
+gulp.task('compile:sass', function () {
     return gulp.src('wwwroot/css/*.scss')
         .pipe(sass())
         .pipe(gulp.dest('wwwroot/css'));
 });
 
-gulp.task('minifyCss', function () {
+gulp.task('minify:js', function () {
     // minify all js files and add '.min' suffix
     return gulp.src(['wwwroot/css/*.css', '!wwwroot/css/*.min.css'])
         .pipe(uglifyCss())
@@ -34,8 +37,8 @@ gulp.task('minifyCss', function () {
 
 // watch all needed tasks
 gulp.task('watch', function () {
-    gulp.watch('wwwroot/js/*.js', ['minifyJs']);
+    gulp.watch('wwwroot/js/*.js', ['minify:js']);
 
-    gulp.watch('wwwroot/css/*.scss', ['compileScss'])
-    gulp.watch('wwwroot/css/*.css', ['minifyCss']);
+    gulp.watch('wwwroot/css/*.scss', ['compile:sass'])
+    gulp.watch('wwwroot/css/*.css', ['minify:css']);
 });
