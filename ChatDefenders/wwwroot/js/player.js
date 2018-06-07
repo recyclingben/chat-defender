@@ -3,3 +3,8 @@ define('player', function () {
         name: "bill"
     };
 });
+define('uglyperson', function () {
+    return {
+        name: "john"
+    };
+});
