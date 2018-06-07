@@ -1,10 +1,13 @@
 // Returns a promise that resolves once 'item' is loaded.
+// This code is beautiful, but also kind of evil for those
+// trying to read it.
 const acquire = (...items) => 
     new Promise(success => {
-        require(items, (...results) => {
-            if (results.length === 1) success(results[0]);
-            else success(results);
-        });
+        require(items, (...results) =>
+            results.length === 1 
+                ? success(results[0])
+                : success(results)
+        );
     });
 
 (async () => {
