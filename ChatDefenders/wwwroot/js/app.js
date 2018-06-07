@@ -1,6 +1,6 @@
-// Wrapper around 'require'. Returns a promise that will resolve
-// once the file is loaded.
-;( () => {
+; (() => {
+    // Wrapper around 'require'. Returns a promise that will resolve
+    // once the file is loaded.
     const acquire = (...items) =>
         new Promise(success => {
             require(items, (...results) =>
