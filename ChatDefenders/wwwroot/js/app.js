@@ -6,12 +6,11 @@ const acquire = item => {
     });
 }
 
-!async function () {
-
+(async () => {
     let player = await acquire('player');
     console.log(player);
 
     let player2 = require('player');
     console.log(player2);
 
-}();
+})();

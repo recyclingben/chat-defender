@@ -35,15 +35,9 @@ gulp.task('compile:sass', function () {
         .pipe(gulp.dest('wwwroot/css'));
 });
 
-gulp.task('bundle:js', function () {
-    return gulp.src(['wwwroot/js/vendor/*.min.js', 'wwwroot/js/app.min.js', 'wwwroot/js/**/*.min.js', '!wwwroot/js/main.min.js'])
-        .pipe(concat('main.min.js', { newLine: '' }))
-        .pipe(gulp.dest('wwwroot/js'));
-});
-
 // watch all needed tasks
 gulp.task('watch', function () {
-    gulp.watch('wwwroot/js/*.js', ['minify:js', 'bundle:js']);
+    gulp.watch(['wwwroot/js/*.js', '!wwwroot/js/*.min.js'], ['minify:js']);
 
     gulp.watch('wwwroot/css/*.scss', ['compile:sass'])
     gulp.watch('wwwroot/css/*.css', ['minify:css']);
