@@ -18,6 +18,7 @@ gulp.task('copy:modules', function () {
 gulp.task('minify:js', function () {
     return gulp.src(['wwwroot/js/**/*.js', '!wwwroot/js/**/*.min.js'])
         .pipe(uglifyJs())
+        .on('error', swallowError)
         .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest('wwwroot/js'));
 });
@@ -42,3 +43,8 @@ gulp.task('watch', function () {
     gulp.watch('wwwroot/css/*.scss', ['compile:sass'])
     gulp.watch('wwwroot/css/*.css', ['minify:css']);
 });
+
+const swallowError = function(e) {
+    console.log(e);
+    this.emit('end');
+};
