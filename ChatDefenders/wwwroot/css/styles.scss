@@ -9,9 +9,12 @@
         }
     }
     .navbar-brand {
-        font-weight: bold;
         color: black;
     }
+}
+
+.behind {
+    z-index: -1;
 }
 
 .fill-absolute {

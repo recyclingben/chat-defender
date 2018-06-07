@@ -7,13 +7,18 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-    <link rel="stylesheet" href="~/css/styles.css" type="text/css" />
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/css/styles.min.css" type="text/css" />
+    </environment>
+    <environment include="Development">
+        <link rel="stylesheet" href="~/css/styles.css" type="text/css" />
+    </environment>
 </head>
 <body>
     <partial name="_CookieConsentPartial" />
 
     <nav class="navbar navbar-dark sticky-top bg-dark navbar-expand-lg">
-        <a class="navbar-brand ml-auto fill-absolute" href="#">
+        <a class="navbar-brand ml-auto fill-absolute behind" href="#">
             <div class="center-inline">Chat Defender</div>
         </a>
         <ul class="navbar-nav ml-auto">
@@ -60,7 +65,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
-    <script data-main="/js/app.min.js" src="~/js/vendor/require.min.js"></script>
+
+    <environment exclude="Development">
+        <script data-main="/js/app.min.js" src="~/js/vendor/require.min.js"></script>
+    </environment>
+    <environment include="Development">
+        <script data-main="/js/app.js" src="~/js/vendor/require.js"></script>
+    </environment>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

@@ -4,8 +4,10 @@ nav {
     outline: none;
     background-color: rgba(0, 0, 0, 0.1); }
   nav .navbar-brand {
-    font-weight: bold;
     color: black; }
+
+.behind {
+  z-index: -1; }
 
 .fill-absolute {
   margin: auto;

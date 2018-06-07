@@ -29,7 +29,7 @@ C:\Users\ben\source\repos\ChatDefenders\ChatDefenders\obj\Debug\netcoreapp2.1\Ch
 C:\Users\ben\source\repos\ChatDefenders\ChatDefenders\obj\Debug\netcoreapp2.1\ChatDefenders.dll
 C:\Users\ben\source\repos\ChatDefenders\ChatDefenders\obj\Debug\netcoreapp2.1\ChatDefenders.pdb
 C:\Users\ben\source\repos\ChatDefenders\ChatDefenders\obj\Debug\netcoreapp2.1\ChatDefenders.csproj.CopyComplete
-C:\Users\ben\source\repos\ChatDefenders\ChatDefenders\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs
 C:\Users\ben\source\repos\ChatDefenders\ChatDefenders\bin\Debug\netcoreapp2.1\ChatDefenders.dll.config
 C:\Users\ben\source\repos\ChatDefenders\ChatDefenders\obj\Debug\netcoreapp2.1\ChatDefenders.dll.config
 C:\Users\ben\source\repos\ChatDefenders\ChatDefenders\obj\Debug\netcoreapp2.1\ChatDefenders.csprojAssemblyReference.cache
+C:\Users\ben\source\repos\ChatDefenders\ChatDefenders\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs
