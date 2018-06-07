@@ -1,6 +1,5 @@
-// Returns a promise that resolves once 'item' is loaded.
-// This code is beautiful, but also kind of evil for those
-// trying to read it.
+// Wrapper around 'require'. Returns a promise that will resolve
+// once the file is loaded.
 const acquire = (...items) => 
     new Promise(success => {
         require(items, (...results) =>
@@ -10,6 +9,7 @@ const acquire = (...items) =>
         );
     });
 
+// testing 'acquire' method
 (async () => {
     let player = await acquire('player');
     console.log(player);
