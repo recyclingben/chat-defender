@@ -1,5 +1,9 @@
 ﻿Vue.component('navbar', {
-    props:['showClient'],
+    props: {
+        "show-client": {
+            default: false
+        }
+    },
     template: `
         <div style="height: 100%;">
             <nav class="navbar navbar-dark sticky-top bg-dark navbar-expand-lg">
@@ -8,9 +12,15 @@
                 </a>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <button type="button" class="btn btn-outline-primary">
-                            <i class="fab fa-discord" style="position: relative; top: 1px;"></i> LOGIN
-                        </button>
+                        <template v-if="showClient">
+                            <div class="account-name">Pieguy</div>
+                            <img src="https://tracker.moodle.org/secure/attachment/30912/f3.png" alt="" height="39px" />
+                        </template>
+                        <template v-else>
+                            <button type="button" class="btn btn-outline-primary">
+                                <i class="fab fa-discord" style="position: relative; top: 1px;"></i> LOGIN
+                            </button>
+                        </template>
                     </li>
                 </ul>
             </nav>

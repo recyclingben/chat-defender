@@ -1,4 +1,8 @@
-﻿nav {
+﻿body {
+    background-color: #343A40;
+}
+
+nav {
     z-index: 5 !important;
 
     button {
@@ -10,6 +14,15 @@
     }
     .navbar-brand {
         color: black;
+    }
+    img {
+        border-radius: 25px;
+        padding: 2px;
+    }
+    .account-name {
+        color: white;
+        display: inline-block;
+        transform: translateY(1px);
     }
 }
 
@@ -45,4 +58,5 @@
 }
 #app {
     height: 200vh;
+    background-color: #343A40;
 }

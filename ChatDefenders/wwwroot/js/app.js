@@ -7,9 +7,9 @@
                 results.length === 1
                     ? success(results[0])
                     : success(results)
-            );
-        });
-    (async () => {
-        console.log(await acquire('player'));
+            )
+        })
+    ;(async () => {
+        console.log(await acquire('player'))
     }) ();
 })()
