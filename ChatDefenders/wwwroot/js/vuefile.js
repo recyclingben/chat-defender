@@ -1,7 +1,7 @@
 ﻿Vue.component('navbar', {
     props:['showClient'],
     template: `
-        <div>
+        <div style="height: 100%;">
             <nav class="navbar navbar-dark sticky-top bg-dark navbar-expand-lg">
                 <a class="navbar-brand ml-auto fill-absolute behind" href="#">
                     <div class="center-inline">Chat Defender</div>
