@@ -89,6 +89,8 @@ namespace ChatDefenders
 						response.EnsureSuccessStatusCode();
 						var user = JObject.Parse(await response.Content.ReadAsStringAsync());
 						context.RunClaimActions(user);
+
+						var account = new Account { Username = (string)user["username"], NameIdentifier = (string)user["id"], AvatarUrl = $"https://cdn.discordapp.com/avatars/{(string)user["id"]}/{(string)user["avatar"]}" };
 					}
 				};
 			});

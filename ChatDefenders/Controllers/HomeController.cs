@@ -20,11 +20,6 @@ namespace ChatDefenders.Controllers
 
         public IActionResult Index()
         {
-			foreach(var p in _context.Posts)
-			{
-				Debug.WriteLine(p.PostAuthor.Name);
-			}
-
             return View();
         }
 

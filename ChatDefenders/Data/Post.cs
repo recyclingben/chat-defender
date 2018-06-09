@@ -9,7 +9,7 @@ namespace ChatDefenders.Data
     {
 		public int ID { get; set; }
 		public DateTime PostDate { get; set; }
-		public virtual PostAuthor PostAuthor { get; set; }
+		public virtual Account Author { get; set; }
 		public string Contents { get; set; }
 		public string Title { get; set; }
 	}

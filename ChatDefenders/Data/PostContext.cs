@@ -11,7 +11,7 @@ namespace ChatDefenders.Data
 		public PostContext(DbContextOptions<PostContext> options) : base(options)
 		{ }
 
-		public DbSet<PostAuthor> PostAuthors { get; set; }
+		public DbSet<Account> Accounts { get; set; }
 		public DbSet<Post> Posts { get; set; }
 	}
 }
