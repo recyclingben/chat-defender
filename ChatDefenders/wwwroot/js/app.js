@@ -11,5 +11,5 @@
         })
     ;(async () => {
         console.log(await acquire('player'))
-    }) ();
+    }) ()
 })()

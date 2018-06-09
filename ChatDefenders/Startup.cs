@@ -16,6 +16,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Linq;
+using ChatDefenders.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Proxies;
 
 namespace ChatDefenders
 {
@@ -38,9 +41,14 @@ namespace ChatDefenders
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+			// Configures access to a given database.
+			services.AddDbContext<PostContext>(options => {
+				options
+					.UseLazyLoadingProxies()
+					.UseSqlServer("Data Source=MSI;Initial Catalog=ChatDefenderDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+			});
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
 
 			Action<AuthenticationOptions> configureOptions = options =>
 			   {
@@ -48,6 +56,7 @@ namespace ChatDefenders
 				   options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 				   options.DefaultChallengeScheme = "Discord";
 			   };
+
 			services.AddAuthentication(configureOptions)
 			.AddCookie()
 			.AddOAuth("Discord", options =>

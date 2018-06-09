@@ -5,13 +5,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ChatDefenders.Models;
+using ChatDefenders.Data;
 
 namespace ChatDefenders.Controllers
 {
     public class HomeController : Controller
     {
+		private readonly PostContext _context;
+
+		public HomeController(PostContext context)
+		{
+			_context = context;
+		}
+
         public IActionResult Index()
         {
+			foreach(var p in _context.Posts)
+			{
+				Debug.WriteLine(p.PostAuthor.Name);
+			}
+
             return View();
         }
 
