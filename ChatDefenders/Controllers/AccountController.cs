@@ -9,9 +9,7 @@ namespace ChatDefenders.Controllers
 {
     public class AccountController : Controller
     {
-        public IActionResult Login()
-        {
-			return Challenge(new AuthenticationProperties { RedirectUri = "/" });
-        }
-    }
+		public IActionResult Login() => 
+			Challenge(new AuthenticationProperties { RedirectUri = "/" });
+	}
 }

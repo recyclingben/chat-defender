@@ -1,9 +1,7 @@
 ﻿Vue.component('navbar', {
-    props: {
-        "show-client": {
-            default: false
-        }
-    },
+    props: [
+        "showclient"
+    ],
     template: `
         <div style="height: 100%;">
             <nav class="navbar navbar-dark sticky-top bg-dark navbar-expand-lg">
@@ -12,9 +10,9 @@
                 </a>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <template v-if="showClient">
+                        <template v-if="showclient">
                             <div class="account-name">Pieguy</div>
-                            <img src="https://tracker.moodle.org/secure/attachment/30912/f3.png" alt="" height="39px" />
+                            <img src="https://tracker.moodle.org/secure/attachment/30912/f3.png" alt="" height="39px" width="39px"/>
                         </template>
                         <template v-else>
                             <button type="button" class="btn btn-outline-primary">

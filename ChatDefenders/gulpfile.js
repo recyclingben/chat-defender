@@ -40,7 +40,7 @@ gulp.task('compile:sass', function () {
 gulp.task('watch', function () {
     gulp.watch(['wwwroot/js/*.js', '!wwwroot/js/*.min.js'], ['minify:js']);
 
-    gulp.watch('wwwroot/css/*.scss', ['compile:sass'])
+    gulp.watch('wwwroot/css/*.scss', ['compile:sass']);
     gulp.watch('wwwroot/css/*.css', ['minify:css']);
 });
 

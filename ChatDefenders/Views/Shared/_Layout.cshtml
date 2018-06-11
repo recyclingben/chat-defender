@@ -17,7 +17,7 @@
 <body>
     <partial name="_CookieConsentPartial" />
     <div id="app">
-        <navbar show-client="false"></navbar>
+        <navbar v-bind:showclient="true"></navbar>
     </div>
 
     @RenderBody()

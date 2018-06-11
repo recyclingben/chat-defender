@@ -36,12 +36,12 @@ namespace ChatDefenders
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                // Determine whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-			// Configures access to a given database.
+			// Configure access to a given database.
 			services.AddDbContext<PostContext>(options => {
 				options
 					.UseLazyLoadingProxies()
@@ -76,7 +76,6 @@ namespace ChatDefenders
 				options.Scope.Clear();
 				options.Scope.Add("identify");
 
-
 				options.Events = new OAuthEvents
 				{
 					OnCreatingTicket = async context =>
@@ -90,10 +89,13 @@ namespace ChatDefenders
 						var user = JObject.Parse(await response.Content.ReadAsStringAsync());
 						context.RunClaimActions(user);
 
-						var account = new Account { Username = (string)user["username"], NameIdentifier = (string)user["id"], AvatarUrl = $"https://cdn.discordapp.com/avatars/{(string)user["id"]}/{(string)user["avatar"]}" };
+						var account = Account.Create(context.Identity).UpdateOrRegister();
+						System.Diagnostics.Debug.WriteLine(account.AvatarUrl);
 					}
 				};
 			});
+
+			ServiceProviderInstance.RegisterInstance(services.BuildServiceProvider());
 		}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

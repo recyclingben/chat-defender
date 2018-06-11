@@ -2844,6 +2844,15 @@
           "lib/netstandard1.6/NuGet.Frameworks.dll": {}
         }
       },
+      "ObjectDumper/1.0.0.12": {
+        "type": "package",
+        "compile": {
+          "lib/net35-Client/ObjectDumper.dll": {}
+        },
+        "runtime": {
+          "lib/net35-Client/ObjectDumper.dll": {}
+        }
+      },
       "Remotion.Linq/2.2.0": {
         "type": "package",
         "dependencies": {
@@ -7725,6 +7734,16 @@
         "lib/netstandard1.6/NuGet.Frameworks.xml",
         "nuget.frameworks.4.7.0-rtm.5148.nupkg.sha512",
         "nuget.frameworks.nuspec"
+      ]
+    },
+    "ObjectDumper/1.0.0.12": {
+      "sha512": "APCoQT264RI7QwFyRp9VghFCQCnnH1zE3EIDcEHNa3l3jmLsZeRuyCs1h77/Rj8AKx/V708W3bE/klf0QG3NAQ==",
+      "type": "package",
+      "path": "objectdumper/1.0.0.12",
+      "files": [
+        "lib/net35-Client/ObjectDumper.dll",
+        "objectdumper.1.0.0.12.nupkg.sha512",
+        "objectdumper.nuspec"
       ]
     },
     "Remotion.Linq/2.2.0": {
@@ -12637,7 +12656,8 @@
       "Microsoft.EntityFrameworkCore.Proxies >= 2.1.0",
       "Microsoft.EntityFrameworkCore.Sqlite.Core >= 2.1.0",
       "Microsoft.NETCore.App >= 2.1.0",
-      "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.1.0"
+      "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.1.0",
+      "ObjectDumper >= 1.0.0.12"
     ]
   },
   "packageFolders": {
@@ -12703,6 +12723,10 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
             "target": "Package",
             "version": "[2.1.0, )"
+          },
+          "ObjectDumper": {
+            "target": "Package",
+            "version": "[1.0.0.12, )"
           }
         },
         "imports": [
@@ -12712,5 +12736,17 @@
         "warn": true
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'ObjectDumper 1.0.0.12' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.1'. This package may not be fully compatible with your project.",
+      "libraryId": "ObjectDumper",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.1"
+      ]
+    }
+  ]
 }

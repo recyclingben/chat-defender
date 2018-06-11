@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.1",
-    "signature": "5f9e2be551ebe28bac369f1804a53840ac63937c"
+    "signature": "0e3c7334017cad8a4406e0144531cd3298f070e2"
   },
   "compilationOptions": {
     "defines": [
@@ -28,7 +28,8 @@
           "Microsoft.EntityFrameworkCore.Proxies": "2.1.0",
           "Microsoft.EntityFrameworkCore.Sqlite.Core": "2.1.0",
           "Microsoft.NETCore.App": "2.1.0",
-          "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.1.0"
+          "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.1.0",
+          "ObjectDumper": "1.0.0.12"
         },
         "runtime": {
           "ChatDefenders.dll": {}
@@ -442,6 +443,17 @@
         },
         "compile": {
           "lib/netstandard1.6/NuGet.Frameworks.dll": {}
+        }
+      },
+      "ObjectDumper/1.0.0.12": {
+        "runtime": {
+          "lib/net35-Client/ObjectDumper.dll": {
+            "assemblyVersion": "1.0.0.12",
+            "fileVersion": "1.0.0.12"
+          }
+        },
+        "compile": {
+          "lib/net35-Client/ObjectDumper.dll": {}
         }
       },
       "SQLitePCLRaw.core/1.1.11": {
@@ -3753,6 +3765,13 @@
       "sha512": "sha512-hmWi7oVNV397Luu7CQwCs/Ctxld+sMLUw9uxRBqVODpvDx1y0M+63sBe4Fh5n0urHRRsIlT/++FNj/UVZLz/Tw==",
       "path": "nuget.frameworks/4.7.0-rtm.5148",
       "hashPath": "nuget.frameworks.4.7.0-rtm.5148.nupkg.sha512"
+    },
+    "ObjectDumper/1.0.0.12": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-APCoQT264RI7QwFyRp9VghFCQCnnH1zE3EIDcEHNa3l3jmLsZeRuyCs1h77/Rj8AKx/V708W3bE/klf0QG3NAQ==",
+      "path": "objectdumper/1.0.0.12",
+      "hashPath": "objectdumper.1.0.0.12.nupkg.sha512"
     },
     "SQLitePCLRaw.core/1.1.11": {
       "type": "package",
