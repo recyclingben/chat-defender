@@ -17,10 +17,9 @@ namespace ChatDefenders.Data
 		public string AvatarUrl { get; set; }
 	}
 
-
 	public partial class Account : IEquatable<Account>, ISetable<Account>
 	{
-		public Account() { }
+		protected Account() { }
 
 		// Returns a new instance of Account that is setup with
 		// identity values.
@@ -46,39 +45,39 @@ namespace ChatDefenders.Data
 		// since its creation.
 		public Account UpdateOrRegister()
 		{
-			using (var context = ServiceProviderInstance.Instance.GetService<PostContext>())
-			{
-				// Current instance of account in database. Null
-				// if none was found.
-				var dbAcc = context.Accounts.FirstOrDefault(_ => _.NameIdentifier.Equals(NameIdentifier));
-				// Add account into db if it doesn't exist.
-				if (dbAcc == null)
-				{
-					context.Accounts.Add(this);
-					System.Diagnostics.Debug.WriteLine("uh oh");
-					context.SaveChanges();
-				}
-				// Update account data if the instances don't match.
-				else if (!Equals(dbAcc))
-				{
-					dbAcc.SetTo(this);
-					context.Entry(dbAcc).State = EntityState.Modified;
+			var context = DataUtilities.GetContextInstance<PostContext>();
 
-					context.Update(dbAcc);
-					context.SaveChanges();
-				}
-				else
-				{
-					System.Diagnostics.Debug.WriteLine("aw shucks");
-				}
+			// Current instance of account in database. Null
+			// if none was found.
+			var dbAcc = context.Accounts.FirstOrDefault(_ => _.NameIdentifier.Equals(NameIdentifier));
+			// Add account into db if it doesn't exist.
+			if (dbAcc == null)
+			{
+				context.Accounts.Add(this);
+
+				context.SaveChanges();
+			}
+			// Update account data if the instances don't match.
+			else if (!Equals(dbAcc))
+			{
+				dbAcc.SetTo(this);
+				context.Entry(dbAcc).State = EntityState.Modified;
+				context.Update(dbAcc);
+
+				context.SaveChanges();
 			}
 			return this;
 		}
 
+		public bool IsRegistered() => 
+			DataUtilities.GetContextInstance<PostContext>()
+				.Accounts
+				.FirstOrDefault(_ => _.NameIdentifier.Equals(NameIdentifier)) != null;
+
 		public bool Equals(Account acc)
 		{
 			if (!Username.Equals(acc.Username)) return false;
-			if (!NameIdentifier.Trim().Equals(acc.NameIdentifier)) return false;
+			if (!NameIdentifier.Equals(acc.NameIdentifier.Trim())) return false;
 			if (!AvatarUrl.Equals(acc.AvatarUrl)) return false;
 
 			return true;

@@ -90,7 +90,6 @@ namespace ChatDefenders
 						context.RunClaimActions(user);
 
 						var account = Account.Create(context.Identity).UpdateOrRegister();
-						System.Diagnostics.Debug.WriteLine(account.AvatarUrl);
 					}
 				};
 			});

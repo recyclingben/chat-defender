@@ -6,7 +6,7 @@ using ChatDefenders.Data;
 
 namespace ChatDefenders.Models
 {
-    public class IndexViewModel : Model
+    public class IndexViewModel : UserModel
     {
 		public IndexViewModel(Account userAccount) : base(userAccount) { }
     }

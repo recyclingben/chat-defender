@@ -6,11 +6,11 @@ using ChatDefenders.Data;
 
 namespace ChatDefenders.Models
 {
-    public class Model
+    public class UserModel
     {
 		public Account UserAccount { get; set; }
 
-		public Model(Account userAccount) => 
+		public UserModel(Account userAccount) => 
 			UserAccount = userAccount;
     }
 }
