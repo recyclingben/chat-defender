@@ -10,6 +10,6 @@ namespace ChatDefenders.Data
     public static class DataUtilities
     {
 		public static T GetContextInstance<T>() where T : DbContext =>
-			ServiceProviderInstance.Instance?.GetService<T>() ?? null;
+			ServiceProviderInstance.Instance?.GetService<T>();
     }
 }

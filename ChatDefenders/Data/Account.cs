@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ChatDefenders.Interfaces;
+using System.Runtime.Serialization;
+using static System.Diagnostics.Debug;
 
 namespace ChatDefenders.Data
 {
@@ -16,9 +18,17 @@ namespace ChatDefenders.Data
 		public string NameIdentifier { get; set; }
 		public string AvatarUrl { get; set; }
 	}
-
-	public partial class Account : IEquatable<Account>, ISetable<Account>
+	[Serializable]
+	public partial class Account : ISetable<Account>, ISerializable
 	{
+		public static Account GetDefault() =>
+			new Account
+			{
+				Username = "Unknown",
+				NameIdentifier = "0",
+				AvatarUrl = "https://discordapp.com/assets/dd4dbc0016779df1378e7812eabaa04d.png"
+			};
+
 		protected Account() { }
 
 		// Returns a new instance of Account that is setup with
@@ -47,24 +57,31 @@ namespace ChatDefenders.Data
 		{
 			var context = DataUtilities.GetContextInstance<PostContext>();
 
-			// Current instance of account in database. Null
-			// if none was found.
-			var dbAcc = context.Accounts.FirstOrDefault(_ => _.NameIdentifier.Equals(NameIdentifier));
-			// Add account into db if it doesn't exist.
-			if (dbAcc == null)
+			// Current instance of account in database. Null if
+			// none were found.
+			var databaseAccount = context.Accounts.FirstOrDefault(_ => _.NameIdentifier.Equals(NameIdentifier));
+			WriteLine(databaseAccount.Username);
+			// Register account into db if it doesn't exist.
+			if (databaseAccount == null)
 			{
+				WriteLine("zipoo");
 				context.Accounts.Add(this);
 
 				context.SaveChanges();
 			}
 			// Update account data if the instances don't match.
-			else if (!Equals(dbAcc))
+			else if (!PropertiesEqualExcludeID(databaseAccount))
 			{
-				dbAcc.SetTo(this);
-				context.Entry(dbAcc).State = EntityState.Modified;
-				context.Update(dbAcc);
+				WriteLine("youch");
+				databaseAccount.SetTo(this);
+				context.Entry(databaseAccount).State = EntityState.Modified;
+				context.Update(databaseAccount);
 
 				context.SaveChanges();
+			}
+			else
+			{
+				WriteLine("zippeee!");
 			}
 			return this;
 		}
@@ -74,20 +91,60 @@ namespace ChatDefenders.Data
 				.Accounts
 				.FirstOrDefault(_ => _.NameIdentifier.Equals(NameIdentifier)) != null;
 
-		public bool Equals(Account acc)
+		// Check for equality between all properties, except for
+		// ID.
+		public bool PropertiesEqualExcludeID(Account account)
 		{
-			if (!Username.Equals(acc.Username)) return false;
-			if (!NameIdentifier.Equals(acc.NameIdentifier.Trim())) return false;
-			if (!AvatarUrl.Equals(acc.AvatarUrl)) return false;
+			Type objType = GetType();
+			foreach(var property in objType.GetProperties())
+			{
+				if (property.Name == "ID")
+				{
+					continue;
+				}
 
+				object currentPropertyValue = property.GetValue(this, null);
+				object comparingPropertyValue = property.GetValue(account, null);
+
+				if (!currentPropertyValue.Equals(comparingPropertyValue))
+				{
+					return false;
+				}
+			}
 			return true;
 		}
 
-		public void SetTo(Account acc)
+		// Set all properties equal to another account,
+		// EXCEPT the ID.
+		public void SetTo(Account account)
 		{
-			Username = acc.Username;
-			NameIdentifier = acc.NameIdentifier;
-			AvatarUrl = acc.AvatarUrl;
+			Username = account.Username;
+			NameIdentifier = account.NameIdentifier;
+			AvatarUrl = account.AvatarUrl;
+		}
+
+		// Only return the needed object properties on serialization. This
+		// is to avoid including the auto-implemented lazy loading methods
+		// when serializing to JSON with client.
+		void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
+		{
+			info.AddValue("Username", Username);
+			info.AddValue("NameIdentifier", NameIdentifier);
+			info.AddValue("AvatarUrl", AvatarUrl);
+		}
+
+		public static Account GetByUserIdentity(ClaimsIdentity userIdentity)
+		{
+			var userIdentifier = userIdentity.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+			if(userIdentifier == null)
+			{
+				return null;
+			}
+
+			return DataUtilities.GetContextInstance<PostContext>()
+					.Accounts
+					.FirstOrDefault(_ => _.NameIdentifier.Equals(userIdentifier));
 		}
 	}
 }

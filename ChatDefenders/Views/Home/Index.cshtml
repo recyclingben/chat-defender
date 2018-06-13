@@ -1,5 +1,13 @@
-﻿
+﻿@model IndexViewModel
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
+}
+
+@section Scripts {
+    <script>
+        let userData = JSON.parse('@Json.Serialize(Model)');
+
+        console.log(userData);
+    </script>
 }
