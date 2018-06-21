@@ -10,7 +10,5 @@
     "gulp-uglify-es": "^1.0.4",
     "gulp-uglifycss": "^1.0.9"
   },
-  "dependencies": {
-    "requirejs": "^2.3.5"
-  }
+  "dependencies": {}
 }

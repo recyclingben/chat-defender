@@ -1,5 +1,3 @@
-define(function () {
-    return {
-        name: "bill"
-    }
-})
+export default {
+    name: "bob"
+}

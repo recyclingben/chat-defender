@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using ChatDefenders.Models;
 using ChatDefenders.Data;
 using System.Security.Claims;
+using static System.Diagnostics.Debug;
 
 namespace ChatDefenders.Controllers
 {
@@ -21,8 +22,7 @@ namespace ChatDefenders.Controllers
 
 		public IActionResult Index()
 		{
-			var userAccount = 
-				Account.GetByUserIdentity((ClaimsIdentity)User.Identity) ?? Account.GetDefault();
+			var userAccount = Account.GetByUserIdentity((ClaimsIdentity) User.Identity) ?? Account.GetDefault();
 			var model = new IndexViewModel(userAccount);
 			return View(model);
 		}

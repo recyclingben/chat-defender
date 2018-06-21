@@ -2,12 +2,15 @@
 
 @{
     ViewData["Title"] = "Home";
+    ViewData["Model"] = Model as UserModel;
 }
 
 @section Scripts {
-    <script>
-        let userData = JSON.parse('@Json.Serialize(Model)');
-
-        console.log(userData);
-    </script>
+<script type="module">
+    import user from '/js/user.js';
+    (function IIFE () {
+        user.data = JSON.parse('@Html.Raw(Model.UserAccount.ToDTOJSON())');
+        console.log(user.data);
+    })();
+</script>
 }

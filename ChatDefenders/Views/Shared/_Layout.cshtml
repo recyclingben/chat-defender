@@ -1,9 +1,11 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chat Defender / @ViewData["Title"]</title>
+    <meta name="description" content="Primary web page for the discord bot 'Chat Defender'" />
+    <meta name="keywords" content="discord bot,discord,discord chat bot,discord chat" />
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
@@ -15,7 +17,6 @@
     </environment>
 </head>
 <body>
-    <partial name="_CookieConsentPartial" />
     <div id="app">
         <navbar v-bind:showclient="true"></navbar>
     </div>
@@ -29,11 +30,11 @@
 
     <environment exclude="Development">
         <script src="~/js/vuefile.min.js"></script>
-        <script data-main="/js/app.min.js" src="~/js/vendor/require.min.js"></script>
+        <script src="~/js/app.min.js" type="module"></script>
     </environment>
     <environment include="Development">
         <script src="~/js/vuefile.js"></script>
-        <script data-main="/js/app.js" src="~/js/vendor/require.js"></script>
+        <script src="~/js/app.js" type="module"></script>
     </environment>
     @RenderSection("Scripts", required: false)
 </body>

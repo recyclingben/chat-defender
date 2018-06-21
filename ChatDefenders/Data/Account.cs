@@ -8,19 +8,29 @@ using Microsoft.Extensions.DependencyInjection;
 using ChatDefenders.Interfaces;
 using System.Runtime.Serialization;
 using static System.Diagnostics.Debug;
+using ChatDefenders.Extensions;
+using System.Reflection;
+using ChatDefenders.Models;
+using Newtonsoft.Json;
+using ChatDefenders.Attributes;
+using System.Dynamic;
 
 namespace ChatDefenders.Data
 {
     public partial class Account
     {
 		public int ID { get; set; }
+		[DTOInclude]
 		public string Username { get; set; }
+		[DTOInclude]
 		public string NameIdentifier { get; set; }
+		[DTOInclude]
 		public string AvatarUrl { get; set; }
 	}
 	[Serializable]
-	public partial class Account : ISetable<Account>, ISerializable
+	public partial class Account : DbObject, ISetable<Account>
 	{
+
 		public static Account GetDefault() =>
 			new Account
 			{
@@ -35,7 +45,7 @@ namespace ChatDefenders.Data
 		// identity values.
 		public static Account Create(ClaimsIdentity userIdentity)
 		{
-			System.Diagnostics.Debug.WriteLine(userIdentity.IsAuthenticated);
+			WriteLine(userIdentity.IsAuthenticated);
 
 			string name = userIdentity.Name;
 			string nameIdentifier = userIdentity.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -70,18 +80,13 @@ namespace ChatDefenders.Data
 				context.SaveChanges();
 			}
 			// Update account data if the instances don't match.
-			else if (!PropertiesEqualExcludeID(databaseAccount))
+			else if (!this.PropertiesEqualExclude(databaseAccount, "ID"))
 			{
-				WriteLine("youch");
 				databaseAccount.SetTo(this);
 				context.Entry(databaseAccount).State = EntityState.Modified;
 				context.Update(databaseAccount);
 
 				context.SaveChanges();
-			}
-			else
-			{
-				WriteLine("zippeee!");
 			}
 			return this;
 		}
@@ -90,29 +95,6 @@ namespace ChatDefenders.Data
 			DataUtilities.GetContextInstance<PostContext>()
 				.Accounts
 				.FirstOrDefault(_ => _.NameIdentifier.Equals(NameIdentifier)) != null;
-
-		// Check for equality between all properties, except for
-		// ID.
-		public bool PropertiesEqualExcludeID(Account account)
-		{
-			Type objType = GetType();
-			foreach(var property in objType.GetProperties())
-			{
-				if (property.Name == "ID")
-				{
-					continue;
-				}
-
-				object currentPropertyValue = property.GetValue(this, null);
-				object comparingPropertyValue = property.GetValue(account, null);
-
-				if (!currentPropertyValue.Equals(comparingPropertyValue))
-				{
-					return false;
-				}
-			}
-			return true;
-		}
 
 		// Set all properties equal to another account,
 		// EXCEPT the ID.
@@ -126,11 +108,15 @@ namespace ChatDefenders.Data
 		// Only return the needed object properties on serialization. This
 		// is to avoid including the auto-implemented lazy loading methods
 		// when serializing to JSON with client.
-		void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
+		public string ToDTOJSON()
 		{
-			info.AddValue("Username", Username);
-			info.AddValue("NameIdentifier", NameIdentifier);
-			info.AddValue("AvatarUrl", AvatarUrl);
+			var propertiesDict = new Dictionary<string, object>();
+			foreach(var prop in DTOProperties)
+			{
+				propertiesDict[prop.Name] = prop.GetValue(this);
+			}
+
+			return JsonConvert.SerializeObject(propertiesDict);
 		}
 
 		public static Account GetByUserIdentity(ClaimsIdentity userIdentity)
@@ -138,13 +124,12 @@ namespace ChatDefenders.Data
 			var userIdentifier = userIdentity.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
 			if(userIdentifier == null)
-			{
 				return null;
-			}
 
 			return DataUtilities.GetContextInstance<PostContext>()
 					.Accounts
-					.FirstOrDefault(_ => _.NameIdentifier.Equals(userIdentifier));
+					.FirstOrDefault
+					(_ => _.NameIdentifier.Equals(userIdentifier));
 		}
 	}
 }

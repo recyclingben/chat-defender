@@ -6,13 +6,6 @@ const   gulp = require("gulp"),
         sass = require("gulp-sass"),
         concat = require("gulp-concat");
 
-// Copies only needed files from the node_modules folder.
-// This  should  be updated  when new modules are  added.
-gulp.task('copy:modules', function () {
-    return gulp.src('node_modules/requirejs/require.js')
-        .pipe(gulp.dest('wwwroot/js/vendor'));
-});
-
 // Minifies all .js files, excluding all that have already
 // been minified to avoid an endless loop.
 gulp.task('minify:js', function () {
