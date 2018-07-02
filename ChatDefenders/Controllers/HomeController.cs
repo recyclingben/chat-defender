@@ -22,7 +22,7 @@ namespace ChatDefenders.Controllers
 
 		public IActionResult Index()
 		{
-			var userAccount = Account.GetByUserIdentity((ClaimsIdentity) User.Identity) ?? Account.GetDefault();
+			var userAccount = Account.GetByUserIdentity((ClaimsIdentity) User.Identity);
 			var model = new IndexViewModel(userAccount);
 			return View(model);
 		}

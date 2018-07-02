@@ -2,21 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using ChatDefenders.Interfaces;
-using System.Runtime.Serialization;
 using static System.Diagnostics.Debug;
 using ChatDefenders.Extensions;
-using System.Reflection;
-using ChatDefenders.Models;
 using Newtonsoft.Json;
 using ChatDefenders.Attributes;
-using System.Dynamic;
 
 namespace ChatDefenders.Data
 {
+	// Contains main account information passed through OAuth.
     public partial class Account
     {
 		public int ID { get; set; }
@@ -30,8 +25,8 @@ namespace ChatDefenders.Data
 	[Serializable]
 	public partial class Account : DbObject, ISetable<Account>
 	{
-
-		public static Account GetDefault() =>
+		// Returns the default instance of an account.
+		public static Account Default =>
 			new Account
 			{
 				Username = "Unknown",
@@ -41,12 +36,10 @@ namespace ChatDefenders.Data
 
 		protected Account() { }
 
-		// Returns a new instance of Account that is setup with
-		// identity values.
+		/* Returns a new instance of Account that is setup with
+		 * the identity's values. */
 		public static Account Create(ClaimsIdentity userIdentity)
 		{
-			WriteLine(userIdentity.IsAuthenticated);
-
 			string name = userIdentity.Name;
 			string nameIdentifier = userIdentity.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 			string urlId = userIdentity.FindFirst("urn:discord:avatar")?.Value;
@@ -60,44 +53,50 @@ namespace ChatDefenders.Data
 			};
 		}
 
-		// If the account doesn't exist within the database, add it.
-		// Otherwise, check if any information has been changed
-		// since its creation.
-		public Account UpdateOrRegister()
+		/* If the account doesn't exist within the database, add it.
+		 * Otherwise, check if any information has been changed
+		 * since its creation. */
+		public static void UpdateOrRegister(ClaimsIdentity userIdentity)
 		{
+			if (!userIdentity.IsAuthenticated)
+				throw new ArgumentException("Identity provided has not been authenticated.");
+
 			var context = DataUtilities.GetContextInstance<PostContext>();
 
-			// Current instance of account in database. Null if
-			// none were found.
-			var databaseAccount = context.Accounts.FirstOrDefault(_ => _.NameIdentifier.Equals(NameIdentifier));
-			WriteLine(databaseAccount.Username);
+			/* Current instance of account in database. Null if
+			 * none was found. */
+			var userIdentifier = userIdentity.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+			var databaseAccount = context.Accounts.FirstOrDefault
+													(
+														_ => _.NameIdentifier.Equals(userIdentifier ?? "")
+													);
+			var currentAccount = Create(userIdentity);
 			// Register account into db if it doesn't exist.
 			if (databaseAccount == null)
 			{
-				WriteLine("zipoo");
-				context.Accounts.Add(this);
+				context.Accounts.Add(currentAccount);
 
 				context.SaveChanges();
 			}
 			// Update account data if the instances don't match.
-			else if (!this.PropertiesEqualExclude(databaseAccount, "ID"))
+			else if (!currentAccount.PropertiesEqualExclude(databaseAccount, "ID"))
 			{
-				databaseAccount.SetTo(this);
+				databaseAccount.SetTo(currentAccount);
 				context.Entry(databaseAccount).State = EntityState.Modified;
 				context.Update(databaseAccount);
 
 				context.SaveChanges();
 			}
-			return this;
 		}
 
+		// This is self-documenting, idiot.
 		public bool IsRegistered() => 
 			DataUtilities.GetContextInstance<PostContext>()
 				.Accounts
 				.FirstOrDefault(_ => _.NameIdentifier.Equals(NameIdentifier)) != null;
 
-		// Set all properties equal to another account,
-		// EXCEPT the ID.
+		/* Set all properties equal to another account,
+		 * EXCEPT the ID. */
 		public void SetTo(Account account)
 		{
 			Username = account.Username;
@@ -105,20 +104,7 @@ namespace ChatDefenders.Data
 			AvatarUrl = account.AvatarUrl;
 		}
 
-		// Only return the needed object properties on serialization. This
-		// is to avoid including the auto-implemented lazy loading methods
-		// when serializing to JSON with client.
-		public string ToDTOJSON()
-		{
-			var propertiesDict = new Dictionary<string, object>();
-			foreach(var prop in DTOProperties)
-			{
-				propertiesDict[prop.Name] = prop.GetValue(this);
-			}
-
-			return JsonConvert.SerializeObject(propertiesDict);
-		}
-
+		// Returns a user that can be identified by the user's identity.
 		public static Account GetByUserIdentity(ClaimsIdentity userIdentity)
 		{
 			var userIdentifier = userIdentity.FindFirst(ClaimTypes.NameIdentifier)?.Value;

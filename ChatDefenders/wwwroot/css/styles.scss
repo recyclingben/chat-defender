@@ -1,5 +1,9 @@
-﻿body {
+﻿@import url('https://fonts.googleapis.com/css?family=Work+Sans');
+
+body {
     background-color: #343A40;
+    font-family: 'Work Sans';
+    padding-top: 135px;
 }
 
 nav {
@@ -12,17 +16,46 @@ nav {
             background-color: rgba(0, 0, 0, 0.1);
         }
     }
+
     .navbar-brand {
         color: black;
     }
+
     img {
         border-radius: 25px;
         padding: 2px;
     }
+
     .account-name {
         color: white;
         display: inline-block;
         transform: translateY(1px);
+    }
+
+    .navbar-nav {
+        li {
+            .dropdown-menu {
+                background-color: #343a40;
+                border-radius: 3px;
+                box-shadow: 0 0 0 black;
+
+                a {
+                    color: white;
+                    border: none;
+
+                    transition: background-color 0.3s ease;
+
+                    &:hover {
+                        background-color: #393f45;
+                    }
+
+                    &:focus,
+                    &:active {
+                        background-color: #3b4248;
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -56,6 +89,42 @@ nav {
     transform: translateY(-1px);
     background-color: #222;
 }
+
+/* Class for the post component. */
+.post {
+    margin-top: 10px;
+
+    .card-header {
+        position: relative;
+        /* creates the little arrow on the left
+         * of the post header. */
+        &::before {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: -5.5px;
+            border-left: 1.1px solid #DFDFDF;
+            border-bottom: 1.1px solid #DFDFDF;
+            border-radius: 0 0 0 4px;
+            transform: translateY(-50%) rotate(45deg);
+            width: 10px;
+            height: 10px;
+            background-color: #f7f7f7;
+        }
+    }
+    /* Self-explanatory. Class for the image to the left of the little
+     * arrow. */
+    img.user-avatar {
+        float: left;
+        margin-right: 15px;
+        border-radius: 4px;
+        box-shadow: 0 0 0 1pt #DFDFDF;
+        position: relative;
+        top: 1px;
+    }
+}
+
 #app {
     height: 200vh;
     background-color: #343A40;

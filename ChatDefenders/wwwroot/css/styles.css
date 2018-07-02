@@ -1,5 +1,8 @@
+@import url("https://fonts.googleapis.com/css?family=Work+Sans");
 body {
-  background-color: #343A40; }
+  background-color: #343A40;
+  font-family: 'Work Sans';
+  padding-top: 135px; }
 
 nav {
   z-index: 5 !important; }
@@ -15,6 +18,18 @@ nav {
     color: white;
     display: inline-block;
     transform: translateY(1px); }
+  nav .navbar-nav li .dropdown-menu {
+    background-color: #343a40;
+    border-radius: 3px;
+    box-shadow: 0 0 0 black; }
+    nav .navbar-nav li .dropdown-menu a {
+      color: white;
+      border: none;
+      transition: background-color 0.3s ease; }
+      nav .navbar-nav li .dropdown-menu a:hover {
+        background-color: #393f45; }
+      nav .navbar-nav li .dropdown-menu a:focus, nav .navbar-nav li .dropdown-menu a:active {
+        background-color: #3b4248; }
 
 .behind {
   z-index: -1; }
@@ -42,6 +57,36 @@ nav {
   z-index: 6;
   transform: translateY(-1px);
   background-color: #222; }
+
+/* Class for the post component. */
+.post {
+  margin-top: 10px;
+  /* Self-explanatory. Class for the image to the left of the little
+     * arrow. */ }
+  .post .card-header {
+    position: relative;
+    /* creates the little arrow on the left
+         * of the post header. */ }
+    .post .card-header::before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: -5.5px;
+      border-left: 1.1px solid #DFDFDF;
+      border-bottom: 1.1px solid #DFDFDF;
+      border-radius: 0 0 0 4px;
+      transform: translateY(-50%) rotate(45deg);
+      width: 10px;
+      height: 10px;
+      background-color: #f7f7f7; }
+  .post img.user-avatar {
+    float: left;
+    margin-right: 15px;
+    border-radius: 4px;
+    box-shadow: 0 0 0 1pt #DFDFDF;
+    position: relative;
+    top: 1px; }
 
 #app {
   height: 200vh;

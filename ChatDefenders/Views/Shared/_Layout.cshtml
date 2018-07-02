@@ -18,10 +18,20 @@
 </head>
 <body>
     <div id="app">
-        <navbar v-bind:showclient="true"></navbar>
+        <template v-if="typeof user != 'undefined'">
+            <navbar :showclient="true"
+                    :avatarurl="user.avatarUrl"
+                    :clientusername="user.username">
+            </navbar>
+        </template>
+        <template v-else>
+            <navbar :showclient="false">
+            </navbar>
+        </template>
+        <div class="container">
+            @RenderBody()
+        </div>
     </div>
-
-    @RenderBody()
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -30,11 +40,13 @@
 
     <environment exclude="Development">
         <script src="~/js/vuefile.min.js"></script>
-        <script src="~/js/app.min.js" type="module"></script>
+        <script src="~/js/app.min.js" type="module">
+        </script>
     </environment>
     <environment include="Development">
         <script src="~/js/vuefile.js"></script>
-        <script src="~/js/app.js" type="module"></script>
+        <script src="~/js/app.js" type="module">
+        </script>
     </environment>
     @RenderSection("Scripts", required: false)
 </body>

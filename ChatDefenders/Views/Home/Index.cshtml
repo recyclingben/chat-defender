@@ -2,15 +2,15 @@
 
 @{
     ViewData["Title"] = "Home";
-    ViewData["Model"] = Model as UserModel;
+    ViewData["LayoutModel"] = Model as UserModel;
 }
 
 @section Scripts {
 <script type="module">
-    import user from '/js/user.js';
-    (function IIFE () {
-        user.data = JSON.parse('@Html.Raw(Model.UserAccount.ToDTOJSON())');
-        console.log(user.data);
+    (() => {
+        app.user = JSON.parse('@Html.Raw(Model?.UserAccount?.AsDTOJSON)');
     })();
 </script>
 }
+
+<post></post>

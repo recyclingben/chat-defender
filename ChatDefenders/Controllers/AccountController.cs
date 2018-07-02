@@ -9,7 +9,8 @@ namespace ChatDefenders.Controllers
 {
     public class AccountController : Controller
     {
-		public IActionResult Login() => 
+		// Challenges with a redirect to the discord login page.
+		public IActionResult Login() =>
 			Challenge(new AuthenticationProperties { RedirectUri = "/" });
 	}
 }

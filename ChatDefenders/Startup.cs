@@ -89,7 +89,7 @@ namespace ChatDefenders
 						var user = JObject.Parse(await response.Content.ReadAsStringAsync());
 						context.RunClaimActions(user);
 
-						var account = Account.Create(context.Identity).UpdateOrRegister();
+						Account.UpdateOrRegister(context.Identity);
 					}
 				};
 			});
@@ -114,6 +114,16 @@ namespace ChatDefenders
             app.UseStaticFiles();
             app.UseCookiePolicy();
 			app.UseAuthentication();
+
+			app.Use(async (context, next) =>
+			{
+				var userDbAccount = Account.GetByUserIdentity((ClaimsIdentity) context.User.Identity);
+
+				if(context.User.Identity.IsAuthenticated)
+					Account.UpdateOrRegister((ClaimsIdentity)context.User.Identity);
+
+				await next.Invoke();
+			});
 
             app.UseMvc(routes =>
             {
